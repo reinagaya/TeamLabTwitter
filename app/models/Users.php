@@ -10,25 +10,22 @@ class Users extends Model
     public $email = NULL;
 
     // データをセットする
-    public function setData($set_name, $set_email)
-    {
-        $this->name = $set_name;
-        $this->email = $set_email;
-    }
+    // public function setData($set_name, $set_email)
+    // {
+    //     $this->name = $set_name;
+    //     $this->email = $set_email;
+    // }
 
     // データをDBに送る
-
-    public function sendData()
+    public function sendData($arr)
     {
         // echo $this->name . " " . $this->email;
+        // $data = json_encode(array("name" => $this->name, "email" => $this->email), JSON_UNESCAPED_UNICODE);
+        $data = json_encode($arr, JSON_UNESCAPED_UNICODE);
+        echo $data. "<br/>";
 
         // データを保存し、エラーをチェックする
-        $success = $this->save(
-            [
-                "name"  => $this->name,
-                "email" => $this->email,
-            ]
-        );
+        $success = $this->save(["data" => $data]);
 
         if ($success) {
             echo "Thanks for registering!";

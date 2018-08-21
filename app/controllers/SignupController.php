@@ -17,8 +17,8 @@ class SignupController extends Controller
         // Usersをインスタンス化
         $user = new Users;
 
-        $user->setData($data["name"], $data["email"]);
+        // $user->setData($data["name"], $data["email"]);
 
-        $user->sendData();
+        $user->sendData($data);
     }
 }
