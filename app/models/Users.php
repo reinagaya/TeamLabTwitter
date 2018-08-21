@@ -20,7 +20,7 @@ class Users extends Model
 
     public function sendData()
     {
-        echo $this->name . " " . $this->email;
+        // echo $this->name . " " . $this->email;
 
         // データを保存し、エラーをチェックする
         $success = $this->save(
