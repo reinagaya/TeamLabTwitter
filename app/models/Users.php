@@ -1,42 +1,121 @@
 <?php
 
-use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Email as EmailValidator;
 
-class Users extends Model
+class Users extends \Phalcon\Mvc\Model
 {
-    // 登録情報
-    public $id = NULL;
-    public $name = NULL;
-    public $email = NULL;
 
-    // データをセットする
-    // public function setData($set_name, $set_email)
-    // {
-    //     $this->name = $set_name;
-    //     $this->email = $set_email;
-    // }
+    /**
+     *
+     * @var integer
+     */
+    public $id;
 
-    // データをDBに送る
-    public function sendData($arr)
+    /**
+     *
+     * @var string
+     */
+    public $username;
+
+    /**
+     *
+     * @var string
+     */
+    public $password;
+
+    /**
+     *
+     * @var string
+     */
+    public $role;
+
+    /**
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     *
+     * @var string
+     */
+    public $created_at;
+
+    /**
+     *
+     * @var string
+     */
+    public $updated_at;
+
+    /**
+     *
+     * @var string
+     */
+    public $active;
+
+    /**
+     * Validations and business logic
+     *
+     * @return boolean
+     */
+
+    // 型が正しいか確認
+    public function validation()
     {
-        // echo $this->name . " " . $this->email;
-        // $data = json_encode(array("name" => $this->name, "email" => $this->email), JSON_UNESCAPED_UNICODE);
-        $data = json_encode($arr, JSON_UNESCAPED_UNICODE);
-        echo $data. "<br/>";
+        $validator = new Validation();
 
-        // データを保存し、エラーをチェックする
-        $success = $this->save(["data" => $data]);
+        // email用のバリデーションを作成
+        $validator->add(
+            'email',
+            new EmailValidator(
+                [
+                    'model'   => $this,
+                    'message' => 'Please enter a correct email address',
+                ]
+            )
+        );
 
-        if ($success) {
-            echo "Thanks for registering!";
-        } else {
-            echo "Sorry, the following problems were generated: ";
-
-            $messages = $this->getMessages();
-
-            foreach ($messages as $message) {
-                echo $message->getMessage(), "<br/>";
-            }
-        }
+        return $this->validate($validator);
     }
+
+    // モデルのメソッドの初期化
+    public function initialize()
+    {
+        $this->setSchema("phalcon_sample");
+        $this->setSource("users");
+    }
+
+    /**
+     * テーブルネームを返す
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'users';
+    }
+
+    /**
+     * parametersで投げられた条件に一致する記録を照会するのを許可
+     *
+     * @param mixed $parameters
+     * @return Users[]|Users|\Phalcon\Mvc\Model\ResultSetInterface
+     */
+    public static function find($parameters = null)
+    {
+        return parent::find($parameters);
+    }
+
+    /**
+     * parametersで投げられた条件に一致する最初記録を照会するのを許可
+     *
+     * @param mixed $parameters
+     * @return Users|\Phalcon\Mvc\Model\ResultInterface
+     */
+    public static function findFirst($parameters = null)
+    {
+        return parent::findFirst($parameters);
+    }
+
 }

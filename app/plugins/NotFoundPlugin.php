@@ -14,10 +14,18 @@ class NotFoundPlugin extends Plugin
         // エラーメッセージの表示
         error_log($exception->getMessage() . PHP_EOL . $exception->getTraceAsString());
         
+        // exceptionがDispatcherExceptionのインスタンスであるか確認
         if ($exception instanceof DispatcherException) {
+
+            // 例外コードを取得
             switch ($exception->getCode()) {
+                // Handlerが見つからない場合
                 case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+
+                // Actionが見つからない場合
                 case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+
+                    // errorコントロールに飛ばす
                     $dispatcher->forward([
                         'controller' => 'errors',
                         'action' => 'show404'
@@ -25,6 +33,7 @@ class NotFoundPlugin extends Plugin
                     return false;
             }
         }
+        // errorコントロールに飛ばす
         $dispatcher->forward([
             'controller' => 'errors',
             'action'     => 'show500'
