@@ -124,10 +124,6 @@ class SecurityPlugin extends Plugin
         $controller = $dispatcher->getControllerName();
         $action     = $dispatcher->getActionName();
 
-        echo $auth["role"]."<br>";
-        echo $controller."<br>";
-        echo $action."<br>";
-
         $acl = $this->getAcl();
 
         // アクセスできるか確認

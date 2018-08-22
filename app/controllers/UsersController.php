@@ -4,6 +4,7 @@ class UsersController extends \Phalcon\Mvc\Controller
 {
     public function indexAction()
     {
+        // すべてのユーザーのデータを取得
         $users = Users::find();
         $this->view->users = $users;
     }

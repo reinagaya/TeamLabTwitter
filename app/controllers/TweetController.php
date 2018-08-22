@@ -6,6 +6,8 @@ class TweetController extends Controller
 {
     public function indexAction()
     {
-        print "OK";
+        $auth = $this->session->get("auth");
+        $tweets =  TWEETS::find($auth["id"]);
+        $this->view->tweets = $tweets;
     }
 }

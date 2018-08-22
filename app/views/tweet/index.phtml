@@ -6,3 +6,18 @@
     <?= $this->tag->textArea(['tweet', 'cols' => 20, 'rows' =>10, 'placeholder' => 'let\'s tweet']) ?><br>
     <?= $this->tag->submitButton(['Tweet', 'class' => 'btn btn-default']) ?>
 <?= $this->tag->endForm() ?>
+
+<table>
+    <thead>
+        <tr>
+            <th>User</th><th>Tweet</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($tweets as $tweet): ?>
+            <tr>
+                <td><?= Users::find($tweet->id)->username ?></td><td><?= $tweet->tweet ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
