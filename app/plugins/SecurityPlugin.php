@@ -50,7 +50,8 @@ class SecurityPlugin extends Plugin
             $privateResources = [
                 'index'      => ['index'],
                 'users'      => ['index'],
-                'session'    => ['end']
+                'session'    => ['end'],
+                'tweet'      => ['index'],
             ];
             foreach ($privateResources as $resource => $actions) {
                 $acl->addResource(new Resource($resource), $actions);
@@ -59,7 +60,7 @@ class SecurityPlugin extends Plugin
             // 一般的な（全員がみられる）アクセス制御
             $publicResources = [
                 'users'      => ['new', 'create'],
-                'session'    => ['index', 'start']
+                'session'    => ['index', 'start'],
             ];
             foreach ($publicResources as $resource => $actions) {
                 $acl->addResource(new Resource($resource), $actions);
@@ -68,7 +69,8 @@ class SecurityPlugin extends Plugin
             // 登録済みのユーザーのアクセス制御
             $usersResources = [
                 'index'      => ['index'],
-                'session'    => ['end']
+                'session'    => ['end'],
+                'tweet'      => ['index'],
             ];
 
             // 管理者にprivateResourceのすべてのアクセス権を付与
@@ -91,6 +93,7 @@ class SecurityPlugin extends Plugin
             foreach ($usersResources as $resource => $actions) {
                 foreach ($actions as $action){
                     $acl->allow('Users', $resource, $action);
+                    
                 }
             }
 
@@ -103,9 +106,11 @@ class SecurityPlugin extends Plugin
     // ディスパッチルート毎に実行する処理
     public function beforeExecuteRoute(Event $event, Dispatcher $dispatcher)
     {
+        // 認証を取得
         $auth = $this->session->get('auth');
 
         if (!$auth) {
+            // 設定されていなかったらゲスト
             $role = 'Guests';
         } else {
             if ($auth['role'] === 'admins') {
@@ -115,13 +120,20 @@ class SecurityPlugin extends Plugin
             }
         }
 
+        // コントローラーとアクション名を取得
         $controller = $dispatcher->getControllerName();
         $action     = $dispatcher->getActionName();
 
+        echo $auth["role"]."<br>";
+        echo $controller."<br>";
+        echo $action."<br>";
+
         $acl = $this->getAcl();
 
+        // アクセスできるか確認
         $allowed = $acl->isAllowed($role, $controller, $action);
 
+        // アクセスできない場合はログイン画面に飛ぶ
         if (!$allowed) {
             $this->flash->error(
                 "You don't have access to this module"
