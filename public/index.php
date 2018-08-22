@@ -5,6 +5,7 @@ use Phalcon\Di\FactoryDefault;
 error_reporting(E_ALL);
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
+// define('APP_PATH', realpath('..'). '/app');
 
 try {
     // FactoryDefauktのインスタンス化
@@ -23,8 +24,11 @@ try {
     
     // Applicationクラスをインスタンス化
     $application = new \Phalcon\Mvc\Application($di);
+    // $application = new \Phalcon\Mvc\Application(new \Base\Services($config));
 
-    echo str_replace(["\n","\r","\t"], '', $application->handle()->getContent());
+    echo $application->handle()->getContent();
+    // echo str_replace(["\n","\r","\t"], '', $application->handle()->getContent());
+    // echo $application->handle(!empty($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : null)->getContent();
 
 } catch (\Exception $e) {
     

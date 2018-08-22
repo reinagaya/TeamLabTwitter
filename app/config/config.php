@@ -13,7 +13,7 @@ return new \Phalcon\Config(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'test',
+        'dbname'      => 'phalcon_sample',
         'charset'     => 'utf8',
     ],
 

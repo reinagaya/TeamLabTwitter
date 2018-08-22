@@ -4,8 +4,11 @@ use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
+use Phalcon\Mvc\Dispatcher;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
+use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Security;
 
 /**
  * Shared configuration service
@@ -94,3 +97,36 @@ $di->setShared('session', function () {
     $session->start();
     return $session;
 });
+
+// コントローラのインスタンス化及びアクションのコール
+$di->set('dispatcher', function () {
+    $eventsManager = new EventsManager();
+
+    // ディスパッチルート毎にアクションがあったらSecurityPluginをインスタンス化
+    $eventsManager->attach(
+        'dispatch:beforeExecuteRoute',
+        new SecurityPlugin()
+    );
+
+    // 例外が補足された際にNotFoundPluginをインスタンス化
+    $eventsManager->attach(
+        'dispatch:beforeException',
+        new NotFoundPlugin()
+    );
+
+    $dispatcher = new Dispatcher();
+
+    $dispatcher->setEventsManager($eventsManager);
+
+    return $dispatcher;
+});
+
+// Securityのセットアップ
+$di->set('security', function () {
+    $security = new Security();
+
+    // パスワードハッシュの設定
+    $security->setWorkFactor(12);
+
+    return $security;
+}, true);

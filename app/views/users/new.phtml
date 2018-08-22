@@ -1,0 +1,10 @@
+<h1>Create user</h1>
+
+<?= $this->getContent() ?>
+
+<?= $this->tag->form(['users/create', 'autocomplete' => 'off']) ?>
+    <?= $this->tag->textField(['username', 'placeholder' => 'Username']) ?>
+    <?= $this->tag->passwordField(['password', 'placeholder' => 'Password']) ?>
+    <?= $this->tag->textField(['email', 'placeholder' => 'Email']) ?>
+    <?= $this->tag->submitButton(['Create', 'class' => 'btn btn-default']) ?>
+<?= $this->tag->endForm() ?>

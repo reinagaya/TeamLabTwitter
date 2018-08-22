@@ -1,0 +1,9 @@
+<h1>Login</h1>
+
+<?= $this->getContent() ?>
+
+<?= $this->tag->form(['session/start', 'autocomplete' => 'off']) ?>
+    <?= $this->tag->textField(['username', 'placeholder' => 'Username']) ?>
+    <?= $this->tag->passwordField(['password', 'placeholder' => 'Password']) ?>
+    <?= $this->tag->submitButton(['Login', 'class' => 'btn btn-default']) ?>
+<?= $this->tag->endForm() ?>
