@@ -13,7 +13,7 @@ return new \Phalcon\Config(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'phalcon_sample',
+        'dbname'      => 'twitter_db',
         'charset'     => 'utf8',
     ],
 

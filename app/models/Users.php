@@ -82,7 +82,7 @@ class Users extends \Phalcon\Mvc\Model
     // モデルのメソッドの初期化
     public function initialize()
     {
-        $this->setSchema("phalcon_sample");
+        $this->setSchema("twitter_db");
         $this->setSource("users");
     }
 
