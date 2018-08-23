@@ -52,6 +52,7 @@ class SecurityPlugin extends Plugin
                 'users'      => ['index'],
                 'session'    => ['end'],
                 'tweet'      => ['index','posttweet'],
+                'follow'     => ['index']
             ];
             foreach ($privateResources as $resource => $actions) {
                 $acl->addResource(new Resource($resource), $actions);
