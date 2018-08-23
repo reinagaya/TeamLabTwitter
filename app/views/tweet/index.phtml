@@ -24,7 +24,7 @@
         <?php foreach($tweets as $tweet): ?>
             <tr>
                 <td><?= $tweet->user_id ?></td>
-                <td><?= htmlspecialchars(nl2br($tweet->tweet)) ?></td>
+                <td><?= nl2br(htmlspecialchars($tweet->tweet)) ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

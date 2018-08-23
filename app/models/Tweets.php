@@ -53,23 +53,4 @@ class Tweets extends \Phalcon\Mvc\Model
 
         return $this->validate($validator);
     }
-
-    /**
-     * Initialize method for model.
-     */
-    public function initialize()
-    {
-        $this->setSchema("twitter_db");
-        $this->setSource("tweets");
-    }
-
-    /**
-     * Returns table name mapped in the model.
-     *
-     * @return string
-     */
-    public function getSource()
-    {
-        return 'tweets';
-    }
 }
