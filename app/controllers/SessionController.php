@@ -37,13 +37,13 @@ class SessionController extends \Phalcon\Mvc\Controller
                     $this->_registerSession($user);
 
                     // Log
-                    $this->flash->success(
-                        'Welcome ' . $user->username
-                    );
+                    // $this->flash->success(
+                    //     'Welcome ' . $user->username
+                    // );
 
-                    // 最初の画面に飛ぶ
+                    // ツイートの画面に飛ぶ
                     return $this->dispatcher->forward([
-                        'controller' => 'index',
+                        'controller' => 'tweet',
                         'action'     => 'index'
                     ]);
                 }
