@@ -2,6 +2,7 @@
 
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Email as EmailValidator;
+use Phalcon\Validation\Validator\StringLength as StringLength;
 
 class Users extends \Phalcon\Mvc\Model
 {
@@ -76,7 +77,32 @@ class Users extends \Phalcon\Mvc\Model
             )
         );
 
+        $validator->add(
+            'password',
+            new StringLength(
+                [
+                    'min'            => 5,
+                    'messageMinimum' => 'password is too short',
+                ]
+            )
+        );
+
         return $this->validate($validator);
+    }
+
+    // セーブ前のバリデーション
+    public function beforeSave()
+    {
+        // usernameの重複がないか確認
+        $existuser = $this->find("username = '". $this->username . "'");
+        
+        // 検索数が０出なかったらエラー
+        if (count($existuser) !== 0) {
+            echo "this username exists<br>";
+            return false;
+        }
+
+        return true;
     }
 
     // モデルのメソッドの初期化
