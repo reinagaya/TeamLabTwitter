@@ -2,7 +2,7 @@
 
 <?= $this->getContent() ?>
 
-<?= $this->tag->form(['tweet/post', 'autocomplete' => 'off']) ?>
+<?= $this->tag->form(['tweet/posttweet', 'autocomplete' => 'off']) ?>
     <?= $this->tag->textArea(['tweet', 'cols' => 20, 'rows' =>10, 'placeholder' => 'let\'s tweet']) ?><br>
     <?= $this->tag->submitButton(['Tweet', 'class' => 'btn btn-default']) ?>
 <?= $this->tag->endForm() ?>
@@ -16,7 +16,7 @@
     <tbody>
         <?php foreach($tweets as $tweet): ?>
             <tr>
-                <td><?= Users::find($tweet->id)->username ?></td><td><?= $tweet->tweet ?></td>
+                <td><?= $tweet->user_id ?></td><td><?= $tweet->tweet ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
