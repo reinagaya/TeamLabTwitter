@@ -1,6 +1,7 @@
 <?php
 
 use Phalcon\Validation;
+use Phalcon\Validation\Validator\StringLength as StringLength;
 
 class Tweets extends \Phalcon\Mvc\Model
 {
@@ -39,6 +40,16 @@ class Tweets extends \Phalcon\Mvc\Model
     public function validation()
     {
         $validator = new Validation();
+
+        $validator->add(
+            "tweet",
+            new StringLength(
+                [
+                    "max"            => 140,
+                    "messageMaximum" => "tweet is too long",
+                ]
+            )
+        );
 
         return $this->validate($validator);
     }

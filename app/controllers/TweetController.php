@@ -10,6 +10,9 @@ class TweetController extends Controller
         $auth = $this->session->get("auth");
         $tweets = TWEETS::find("user_id = '". $auth["id"] . "'");
 
+        // エラーメッセージを表示
+        $this->flashSession->output();
+
         // viewにセット
         $this->view->tweets = $tweets;
     }
@@ -18,6 +21,7 @@ class TweetController extends Controller
     {
         // Postされた情報がない場合
         if (!$this->request->isPost()) {
+
             // ツイートページに飛ぶ
             // URLを変更する必要性があるため、forwardではなくredirect
             $this->response->redirect("tweet");
@@ -38,7 +42,7 @@ class TweetController extends Controller
         if (!$tweet->save()) {
             // エラーメッセージを表示
             foreach ($tweet->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flashSession->error($message);
             }
 
             // ツイートページに飛ぶ
