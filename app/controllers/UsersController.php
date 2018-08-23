@@ -32,18 +32,6 @@ class UsersController extends \Phalcon\Mvc\Controller
         
         // 各データを書き込む
         $user->username = $this->request->getPost('username');
-    
-        if (($user->username != "") && (!empty(Users::find(array("username" => $user->username))))) {
-
-            $message = "this username is exist";
-            $this->flash->error($message);
-
-            // 登録画面に飛ぶ
-            $this->dispatcher->forward([
-                'controller' => 'users',
-                'action' => 'new'
-            ]);
-        }
         
         // パスワードはハッシュしてから投げる
         $password = $this->request->getPost('password');
@@ -73,8 +61,6 @@ class UsersController extends \Phalcon\Mvc\Controller
 
             return;
         }
-
-        echo "OK";
 
         // Log
         $this->flash->success('user was created successfully');
