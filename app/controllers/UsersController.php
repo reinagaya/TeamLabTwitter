@@ -54,9 +54,6 @@ class UsersController extends \Phalcon\Mvc\Controller
 
         $user->email = $this->request->getPost('email', 'email');
         $user->active = 'Y';
-
-        
-        echo "OK";
         
         // DBに書き込めなかったら
         $user->create();
