@@ -19,7 +19,8 @@
     <tbody>
         <?php foreach($tweets as $tweet): ?>
             <tr>
-                <td><?= $tweet->user_id ?></td><td><?= $tweet->tweet ?></td>
+                <td><?= $tweet->user_id ?></td>
+                <td><?= nl2br($tweet->tweet) ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
