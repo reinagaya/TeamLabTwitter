@@ -61,10 +61,7 @@ class UsersController extends \Phalcon\Mvc\Controller
         // Log
         $this->flash->success('user was created successfully');
 
-        // sessionのindexに飛ばす
-        $this->dispatcher->forward([
-            'controller' => 'session',
-            'action' => 'index'
-        ]);
+        // ログイン画面に飛ぶ
+        $this->response->redirect("login");
     }
 }
