@@ -1,0 +1,14 @@
+<table>
+    <thead>
+        <tr>
+            <th>follower id</th><th>followee id</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($follows as $follow): ?>
+            <tr>
+                <td><?= $follow->follower_id ?></td><td><?= $follow->followee_id ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

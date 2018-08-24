@@ -16,6 +16,9 @@ class SessionController extends \Phalcon\Mvc\Controller
                 'role' => $user->role
             ]
         );
+
+        // ユーザーをセット
+        
     }
 
     public function startAction()

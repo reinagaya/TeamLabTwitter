@@ -1,0 +1,15 @@
+<h1>follow up</h1>
+
+<?= $this->getContent() ?>
+
+<?= $this->tag->form(['follow/setfollow', 'autocomplete' => 'off']) ?>
+    <?= $this->tag->select([
+        'followee',
+        $followees,
+        'using' => ['id', 'username'],
+        'useEmpty'=> true,
+        'emptyText' =>'Please, choose followee']) ?>
+    <?= $this->tag->submitButton(['Follow', 'class' => 'btn btn-default']) ?>
+<?= $this->tag->endForm() ?>
+
+<a href="../tweet" class="btn btn-primary">back</a>
