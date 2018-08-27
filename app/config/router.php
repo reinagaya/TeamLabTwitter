@@ -20,5 +20,11 @@ $router->addGet(
     'Session::end'
 );
 
+// tweet
+$router->add(
+    '/',
+    'Tweet::index'
+);
+
 // $_GET["_url"]からURLを取得
 $router->handle();

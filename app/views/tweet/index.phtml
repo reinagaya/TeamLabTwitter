@@ -1,0 +1,27 @@
+<h1>Tweet list</h1>
+
+<?= $this->tag->linkto("logout", "Logout") ?>
+<br><br>
+<?= $this->getContent() ?>
+
+<?= $this->tag->form(['tweet/posttweet', 'autocomplete' => 'off']) ?>
+    <?= $this->tag->textArea(['tweet', 'cols' => 20, 'rows' =>10, 'placeholder' => 'let\'s tweet']) ?><br>
+    <?= $this->tag->submitButton(['Tweet', 'class' => 'btn btn-default']) ?>
+<?= $this->tag->endForm() ?>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>User</th><th>Tweet</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($tweets as $tweet): ?>
+            <tr>
+                <td><?= $tweet->user_id ?></td>
+                <td><?= nl2br($tweet->tweet) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
