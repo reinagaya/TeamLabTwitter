@@ -2,6 +2,7 @@
 
 <?= $this->tag->linkto("logout", "Logout") ?>
 <br><br>
+
 <?= $this->getContent() ?>
 
 <?= $this->tag->form(['tweet/posttweet', 'autocomplete' => 'off']) ?>
@@ -9,6 +10,9 @@
     <?= $this->tag->submitButton(['Tweet', 'class' => 'btn btn-default']) ?>
 <?= $this->tag->endForm() ?>
 </p>
+
+<?= $this->tag->linkto("follow/newfollow", "Follow") ?>
+<br><br>
 
 <table>
     <thead>
@@ -20,7 +24,7 @@
         <?php foreach($tweets as $tweet): ?>
             <tr>
                 <td><?= $tweet->user_id ?></td>
-                <td><?= nl2br($tweet->tweet) ?></td>
+                <td><?= nl2br(htmlspecialchars($tweet->tweet)) ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

@@ -1,6 +1,7 @@
 <?php
 
 use Phalcon\Mvc\Controller;
+use Phalcon\Db\Column;
 
 class TweetController extends Controller
 {
@@ -8,7 +9,43 @@ class TweetController extends Controller
     {
         // 自分のツイートを取得
         $auth = $this->session->get("auth");
-        $tweets = TWEETS::find("user_id = '". $auth["id"] . "'");
+
+        // フォロー用のクエリをバインド
+        $folcondition = "follower_id = :id:";
+
+        // 強制的にintに変換
+        $type = array("id" => Column::BIND_PARAM_INT);
+
+        // クエリの実行
+        $followees = Follows::find([
+            $folcondition,
+            "bind" => [
+                "id" => $auth["id"]
+            ],
+            "bindTypes" => $type
+        ]);
+
+        // ツイート用のクエリをバインド
+        $i = (int)0;
+        $tweetscondition = "user_id = ?" . $i;
+
+        // ツイートを取得するユーザー
+        $users = array((int)$auth["id"]);
+
+        foreach ($followees as $followee) {
+            array_push($users , (int)$followee->followee_id);
+
+            $i++;
+            $tweetscondition .= " or user_id = ?" . $i;
+        }
+
+        // クエリの実行
+        $tweets = TWEETS::find([
+            $tweetscondition,
+            "bind" => $users,
+            "bindTypes" => $type,
+            "order" => "created_at"
+        ]);
 
         // エラーメッセージを表示
         $this->flashSession->output();
