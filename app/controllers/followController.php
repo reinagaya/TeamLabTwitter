@@ -86,16 +86,18 @@ class followController extends Controller
        $ids = array();
 
        // ユーザー用のクエリをバインド
-       $userscondition = "";
+       $conditions = array();
        $i = (int)0;
        foreach ($followees as $followee) {
+           // 取得するユーザーのidを配列にする
            array_push($ids , (int)$followee->followee_id);
 
-           $userscondition .= " id = ?" . $i. " or";
+           array_push($conditions, " id = ?" . $i);
            $i++;
        }
 
-       $userscondition = substr($userscondition, 0, strlen($userscondition) - 3);
+       // 各条件にorを挟む
+       $userscondition = join("or", $conditions);
 
        // クエリの実行
        $users = Users::find([
