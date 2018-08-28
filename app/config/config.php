@@ -4,18 +4,13 @@
 defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: realpath(dirname(__FILE__) . '/../..'));
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 
+include APP_PATH . "/config/database.php";
+
 // config.phpが呼ばれたら以下のデータを返す
 return new \Phalcon\Config(
     [
     // データベースの情報
-    'database' => [
-        'adapter'     => 'Mysql',
-        'host'        => 'localhost',
-        'username'    => 'root',
-        'password'    => '',
-        'dbname'      => 'twitter_db',
-        'charset'     => 'utf8',
-    ],
+    'database' => $dbconfig,
 
     // Path
     'application' => [
