@@ -1,0 +1,15 @@
+<h1>unfollow</h1>
+
+<?= $this->getContent() ?>
+
+<?= $this->tag->form(['follow/deletefollow', 'autocomplete' => 'off']) ?>
+    <?= $this->tag->select([
+        'followee',
+        $followees,
+        'using' => ['id', 'username'],
+        'useEmpty'=> true,
+        'emptyText' =>'Please, choose followee']) ?>
+    <?= $this->tag->submitButton(['Unfollow', 'class' => 'btn btn-default']) ?>
+<?= $this->tag->endForm() ?>
+
+<a href="../tweet" class="btn btn-primary">back</a>

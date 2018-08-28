@@ -2,8 +2,6 @@
 
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Email as EmailValidator;
-use Phalcon\Validation\Validator\StringLength as StringLength;
-use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
 
 class Users extends \Phalcon\Mvc\Model
 {
@@ -78,27 +76,6 @@ class Users extends \Phalcon\Mvc\Model
             )
         );
 
-        $validator->add(
-            'password',
-            new StringLength(
-                [
-                    'min'            => 5,
-                    'messageMinimum' => 'password is too short',
-                ]
-            )
-        );
-
-        // username用のバリデーション　名前の重複を避ける
-        $validator->add(
-            'username',
-            new UniquenessValidator(
-                [
-                    'model' => $this,
-                    'message' => "this username exists"
-                ]
-            )
-                );
-
         return $this->validate($validator);
     }
 
@@ -117,6 +94,28 @@ class Users extends \Phalcon\Mvc\Model
     public function getSource()
     {
         return 'users';
+    }
+
+    /**
+     * parametersで投げられた条件に一致する記録を照会するのを許可
+     *
+     * @param mixed $parameters
+     * @return Users[]|Users|\Phalcon\Mvc\Model\ResultSetInterface
+     */
+    public static function find($parameters = null)
+    {
+        return parent::find($parameters);
+    }
+
+    /**
+     * parametersで投げられた条件に一致する最初記録を照会するのを許可
+     *
+     * @param mixed $parameters
+     * @return Users|\Phalcon\Mvc\Model\ResultInterface
+     */
+    public static function findFirst($parameters = null)
+    {
+        return parent::findFirst($parameters);
     }
 
 }

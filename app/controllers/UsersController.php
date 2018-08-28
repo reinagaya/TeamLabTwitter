@@ -43,9 +43,6 @@ class UsersController extends \Phalcon\Mvc\Controller
         $user->email = $this->request->getPost('email', 'email');
         $user->active = 'Y';
         
-        // DBに書き込めなかったら
-        $user->create();
-
         if (!$user->save()) {
             
             // エラーメッセージを表示
@@ -63,7 +60,7 @@ class UsersController extends \Phalcon\Mvc\Controller
         }
 
         // Log
-        $this->flash->success('user was created successfully');
+        // $this->flash->success('user was created successfully');
 
         // ログイン画面に飛ぶ
         $this->response->redirect("login");

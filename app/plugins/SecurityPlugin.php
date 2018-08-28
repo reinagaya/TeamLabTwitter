@@ -52,7 +52,7 @@ class SecurityPlugin extends Plugin
                 'users'      => ['index'],
                 'session'    => ['end'],
                 'tweet'      => ['index','posttweet'],
-                'follow'     => ['index','newfollow','setfollow']
+                'follow'     => ['index','newfollow','setfollow','unfollow','deletefollow']
             ];
             foreach ($privateResources as $resource => $actions) {
                 $acl->addResource(new Resource($resource), $actions);
@@ -72,7 +72,7 @@ class SecurityPlugin extends Plugin
                 'index'      => ['index'],
                 'session'    => ['end'],
                 'tweet'      => ['index','posttweet'],
-                'follow'     => ['newfollow','setfollow']
+                'follow'     => ['newfollow','setfollow','unfollow','deletefollow']
             ];
 
             // 管理者にprivateResourceのすべてのアクセス権を付与
